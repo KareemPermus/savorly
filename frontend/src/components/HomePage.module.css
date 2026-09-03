@@ -1,0 +1,214 @@
+.page {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.loading, .error, .empty {
+  padding: 4rem 2rem;
+  text-align: center;
+  color: #78716c;
+  font-size: 0.95rem;
+}
+.error { color: #dc2626; }
+.empty a { color: #F97316; text-decoration: underline; }
+
+/* Hero */
+.hero {
+  position: relative;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  background: #292524;
+  color: #fff;
+  min-height: 280px;
+}
+.heroImg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.5;
+}
+.heroContent {
+  position: relative;
+  padding: 2.5rem;
+  max-width: 560px;
+}
+.heroLabel {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #F97316;
+}
+.heroTitle {
+  font-family: 'Fraunces', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-top: 0.75rem;
+  line-height: 1.2;
+}
+.heroDesc {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: #d6d3d1;
+}
+.heroMeta {
+  display: flex;
+  gap: 1.25rem;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+}
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.heroBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 1.25rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  background: #fff;
+  color: #1c1917;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.heroBtn:hover { background: #f5f5f4; }
+
+/* Section */
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.sectionTitle {
+  font-family: 'Fraunces', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #1c1917;
+}
+.seeAll {
+  font-size: 0.8rem;
+  color: #F97316;
+  text-decoration: none;
+}
+.seeAll:hover { text-decoration: underline; }
+
+/* Trending grid */
+.trendingGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+@media (max-width: 1024px) { .trendingGrid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .trendingGrid { grid-template-columns: 1fr; } }
+
+.card {
+  background: #fff;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid #e7e5e4;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.2s;
+}
+.card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+
+.cardImg {
+  height: 160px;
+  background-size: cover;
+  background-position: center;
+  background-color: #d6d3d1;
+  position: relative;
+}
+.favBtn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cardBody { padding: 1rem; }
+.cardTitle {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #1c1917;
+}
+.card:hover .cardTitle { color: #F97316; }
+.cardMeta {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: #78716c;
+}
+.cardMeta span {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+/* Quick grid */
+.quickGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+@media (max-width: 1024px) { .quickGrid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .quickGrid { grid-template-columns: 1fr; } }
+
+.quickCard {
+  display: flex;
+  gap: 1rem;
+  background: #fff;
+  border-radius: 1rem;
+  border: 1px solid #e7e5e4;
+  padding: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.2s;
+}
+.quickCard:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+
+.quickImg {
+  width: 96px;
+  height: 96px;
+  border-radius: 0.75rem;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
+  background-color: #d6d3d1;
+}
+.quickTitle {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+.quickDesc {
+  font-size: 0.75rem;
+  color: #78716c;
+  margin-top: 0.25rem;
+}
+.quickTime {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: #78716c;
+}
