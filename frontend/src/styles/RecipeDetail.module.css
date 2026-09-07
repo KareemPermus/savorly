@@ -1,0 +1,45 @@
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+.backBtn {
+  background: none;
+  border: none;
+  color: #F97316;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 16px;
+  padding: 0;
+}
+.backBtn:hover { text-decoration: underline; }
+.loading, .error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  color: #78716c;
+  font-size: 16px;
+  gap: 16px;
+}
+.actions {
+  display: flex;
+  gap: 12px;
+  margin: 20px 0;
+}
+.body {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px;
+}
+@media (max-width: 768px) {
+  .body { grid-template-columns: 1fr; }
+}
+.ingredientsCol, .stepsCol {
+  background: white;
+  border: 1px solid #e7e5e4;
+  border-radius: 16px;
+  padding: 24px;
+}

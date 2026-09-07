@@ -1,0 +1,9 @@
+.wrap { position: relative; }
+.icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #a8a29e; }
+.input {
+  padding: 8px 16px 8px 36px; width: 260px; border-radius: 9999px;
+  border: 1px solid #d6d3d1; background: #fff; font-size: 0.875rem;
+  outline: none; font-family: 'Inter', sans-serif;
+}
+.input:focus { border-color: #f97316; box-shadow: 0 0 0 2px rgba(249,115,22,0.15); }
+@media (max-width: 640px) { .input { width: 100%; } }

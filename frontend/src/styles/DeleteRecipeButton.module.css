@@ -1,0 +1,38 @@
+.deleteBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  border: 1px solid #fecaca;
+  background: white;
+  color: #dc2626;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.deleteBtn:hover { background: #fef2f2; }
+.confirmWrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.confirmText { font-size: 13px; color: #dc2626; }
+.yesBtn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: none;
+  background: #dc2626;
+  color: white;
+  font-size: 13px;
+  cursor: pointer;
+}
+.yesBtn:disabled { opacity: 0.6; }
+.noBtn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid #e7e5e4;
+  background: white;
+  font-size: 13px;
+  cursor: pointer;
+}

@@ -1,0 +1,8 @@
+.btn {
+  display: flex; align-items: center; gap: 6px;
+  background: #f97316; color: #fff; border: none;
+  padding: 8px 20px; border-radius: 9999px;
+  font-size: 0.875rem; font-weight: 500; cursor: pointer;
+  font-family: 'Inter', sans-serif;
+}
+.btn:hover { background: #ea580c; }
