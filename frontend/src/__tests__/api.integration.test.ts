@@ -1,58 +1,6 @@
 const ROUTES = [
   {
     "method": "GET",
-    "path": "/api/recipes",
-    "request_path": "/api/recipes",
-    "auth_required": false,
-    "success_status": 200,
-    "sample_body": null,
-    "response_keys": [],
-    "expects_json": true
-  },
-  {
-    "method": "GET",
-    "path": "/api/recipes/:id",
-    "request_path": "/api/recipes/1",
-    "auth_required": false,
-    "success_status": 200,
-    "sample_body": null,
-    "response_keys": [
-      "category",
-      "cook_time",
-      "created_at",
-      "description",
-      "id",
-      "image_url",
-      "ingredients",
-      "prep_time",
-      "servings",
-      "steps",
-      "title"
-    ],
-    "expects_json": true
-  },
-  {
-    "method": "GET",
-    "path": "/api/meal-plans",
-    "request_path": "/api/meal-plans",
-    "auth_required": false,
-    "success_status": 200,
-    "sample_body": null,
-    "response_keys": [],
-    "expects_json": true
-  },
-  {
-    "method": "GET",
-    "path": "/api/meal-plans/:id",
-    "request_path": "/api/meal-plans/1",
-    "auth_required": false,
-    "success_status": 200,
-    "sample_body": null,
-    "response_keys": [],
-    "expects_json": true
-  },
-  {
-    "method": "GET",
     "path": "/api/health",
     "request_path": "/api/health",
     "auth_required": false,

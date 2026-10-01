@@ -1,8 +1,10 @@
 # Savorly
 
-a recipe app
+**Features**
+- User requested a dark/light mode toggle button be added to the app
 
 ## Stack
-- Frontend: Next.js
+- Frontend: React (Vite)
+- Backend: Laravel
 
 <!-- myndlab:readme -->

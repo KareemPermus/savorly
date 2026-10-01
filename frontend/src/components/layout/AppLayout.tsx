@@ -1,76 +1,99 @@
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { FiHome, FiBook, FiCalendar, FiMenu, FiX } from 'react-icons/fi';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { FiCalendar, FiBook, FiMenu, FiX, FiSun, FiMoon } from 'react-icons/fi';
+import styles from './AppLayout.module.css';
 
 const navItems = [
-  { label: 'Home', href: '/', icon: FiHome },
-  { label: 'Recipes', href: '/recipes', icon: FiBook },
-  { label: 'Meal Planner', href: '/meal-planner', icon: FiCalendar },
+  { label: 'MealPlanner', path: '/', icon: <FiCalendar /> },
+  { label: 'Recipes', path: '/recipes', icon: <FiBook /> },
 ];
 
-export default function AppLayout({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+interface Props {
+  children: React.ReactNode;
+}
 
-  const isActive = (href: string) => {
-    if (href === '/') return router.pathname === '/' || router.pathname === '/home';
-    return router.pathname.startsWith(href);
-  };
+export default function AppLayout({ children }: Props) {
+  const location = useLocation();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [dark, setDark] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('savorly-theme') === 'dark';
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    localStorage.setItem('savorly-theme', dark ? 'dark' : 'light');
+  }, [dark]);
 
   return (
-    <div className="h-screen flex overflow-hidden bg-cream">
-      {/* Mobile backdrop */}
-      {sidebarOpen && (
-        <div className="fixed inset-0 bg-black/30 z-30 lg:hidden" onClick={() => setSidebarOpen(false)} />
-      )}
+    <div className={styles.shell}>
+      {mobileOpen && <div className={styles.overlay} onClick={() => setMobileOpen(false)} />}
 
-      {/* Sidebar */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-40 w-60 bg-white border-r border-stone-200 flex flex-col transform transition-transform lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-        <div className="px-6 py-5 flex items-center gap-2 border-b border-stone-100">
-          <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center text-white font-bold text-sm">S</div>
-          <span className="text-xl font-serif font-bold">Savorly</span>
+      <aside className={`${styles.sidebar} ${mobileOpen ? styles.sidebarOpen : ''}`}>
+        <div className={styles.brand}>
+          <div className={styles.logo}>
+            <FiBook className={styles.logoIcon} />
+          </div>
+          <span className={styles.brandName}>Savorly</span>
+          <button className={styles.closeMobile} onClick={() => setMobileOpen(false)}>
+            <FiX />
+          </button>
         </div>
-        <nav className="flex-1 px-3 py-4 space-y-1 text-sm">
+
+        <nav className={styles.nav}>
           {navItems.map((item) => {
-            const Icon = item.icon;
-            const active = isActive(item.href);
+            const active = location.pathname === item.path;
             return (
-              <Link key={item.href} href={item.href}
-                className={`flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors ${active ? 'bg-orange-50 text-orange-700' : 'text-stone-600 hover:bg-stone-50'}`}
-                onClick={() => setSidebarOpen(false)}>
-                <Icon className="w-4 h-4" />
-                {item.label}
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`${styles.navItem} ${active ? styles.navItemActive : ''}`}
+                onClick={() => setMobileOpen(false)}
+              >
+                {item.icon}
+                <span>{item.label}</span>
               </Link>
             );
           })}
         </nav>
-        <div className="px-4 py-4 border-t border-stone-100 flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-accent/20 flex items-center justify-center text-accent font-bold text-sm">U</div>
-          <div className="text-sm leading-tight">
-            <p className="font-medium">Home Cook</p>
-            <p className="text-stone-400 text-xs">Savorly User</p>
+
+        <div className={styles.sidebarFooter}>
+          <button
+            className={styles.themeToggle}
+            onClick={() => setDark(d => !d)}
+            aria-label="Toggle dark mode"
+            title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {dark ? <FiSun size={16} /> : <FiMoon size={16} />}
+            <span>{dark ? 'Light mode' : 'Dark mode'}</span>
+          </button>
+          <div className={styles.userBlock}>
+            <div className={styles.avatar}>S</div>
+            <div className={styles.userInfo}>
+              <div className={styles.userName}>Savorly User</div>
+              <div className={styles.userRole}>Home cook</div>
+            </div>
           </div>
         </div>
       </aside>
 
-      {/* Main */}
-      <main className="flex-1 overflow-y-auto h-screen">
-        {/* Topbar */}
-        <div className="sticky top-0 z-10 bg-cream/90 backdrop-blur px-4 md:px-8 py-4 flex items-center justify-between border-b border-stone-200">
-          <div className="flex items-center gap-3">
-            <button className="lg:hidden text-stone-600" onClick={() => setSidebarOpen(true)}>
-              <FiMenu className="w-5 h-5" />
-            </button>
-            <div>
-              <h1 className="text-xl md:text-2xl font-bold font-serif">Savorly</h1>
-              <p className="text-sm text-stone-500 hidden sm:block">What are we cooking today?</p>
-            </div>
-          </div>
+      <main className={styles.main}>
+        <div className={styles.topbar}>
+          <button className={styles.menuBtn} onClick={() => setMobileOpen(true)}>
+            <FiMenu />
+          </button>
+          <div className={styles.topbarBrand}>Savorly</div>
+          <button
+            className={styles.themeToggleMobile}
+            onClick={() => setDark(d => !d)}
+            aria-label="Toggle dark mode"
+          >
+            {dark ? <FiSun size={18} /> : <FiMoon size={18} />}
+          </button>
         </div>
-        <div className="px-4 md:px-8 py-6">
-          {children}
-        </div>
+        <div className={styles.content}>{children}</div>
       </main>
     </div>
   );

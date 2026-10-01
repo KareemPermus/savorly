@@ -1,40 +1,37 @@
-export function initErrorReporter() {
-  if (typeof window === 'undefined') return;
-
-  const reportUrl = process.env.NEXT_PUBLIC_RUNTIME_ERROR_REPORT_URL;
-  if (!reportUrl) return;
-
-  let appId = process.env.NEXT_PUBLIC_APP_ID || '';
-  if (!appId) {
-    const match = window.location.hostname.match(/^preview-([^.]+)/);
-    if (match) appId = match[1];
-  }
-
-  function send(message: string, stack?: string) {
+const appId =
+  import.meta.env.VITE_APP_ID ||
+  (() => {
     try {
-      fetch(reportUrl!, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          app_id: appId,
-          message,
-          stack: stack || '',
-          url: window.location.href,
-          user_agent: navigator.userAgent,
-        }),
-      }).catch(() => {});
-    } catch {}
-  }
+      const m = window.location.hostname.match(/^preview-([^.]+)/);
+      return m ? m[1] : undefined;
+    } catch {
+      return undefined;
+    }
+  })();
 
-  window.onerror = (_msg, _src, _line, _col, err) => {
-    send(String(_msg), err?.stack);
-  };
-  window.onunhandledrejection = (e) => {
-    send(e.reason?.message || String(e.reason), e.reason?.stack);
-  };
-  const origErr = console.error;
-  console.error = (...args: any[]) => {
-    origErr.apply(console, args);
-    send(args.map(String).join(' '));
-  };
+const reportUrl = import.meta.env.VITE_RUNTIME_ERROR_REPORT_URL || '';
+
+function send(payload: Record<string, unknown>) {
+  if (!reportUrl) return;
+  try {
+    fetch(reportUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ app_id: appId, user_agent: navigator.userAgent, ...payload }),
+    }).catch(() => {});
+  } catch {}
 }
+
+window.onerror = (message, source, _l, _c, error) => {
+  send({ message: String(message), stack: error?.stack, url: source });
+};
+
+window.onunhandledrejection = (e: PromiseRejectionEvent) => {
+  send({ message: String(e.reason), stack: e.reason?.stack, url: window.location.href });
+};
+
+const origConsoleError = console.error;
+console.error = (...args: unknown[]) => {
+  origConsoleError.apply(console, args);
+  send({ message: args.map(String).join(' '), url: window.location.href });
+};
